@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Silent Force – Registrierung</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top, rgba(60, 60, 80, 0.25), transparent 35%),
+        linear-gradient(180deg, #050507 0%, #0b0d12 100%);
+      color: #f2f2f2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 30px;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 580px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 18px;
+      padding: 36px 28px;
+      backdrop-filter: blur(8px);
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    p {
+      color: #b8beca;
+      line-height: 1.6;
+      margin-bottom: 26px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    label {
+      font-size: 0.92rem;
+      color: #cfd5e0;
+    }
+
+    input {
+      width: 100%;
+      padding: 14px 16px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.05);
+      color: white;
+      outline: none;
+    }
+
+    input::placeholder {
+      color: #8991a2;
+    }
+
+    button {
+      margin-top: 8px;
+      padding: 14px 18px;
+      border: none;
+      border-radius: 12px;
+      background: #f2f2f2;
+      color: #111318;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 18px;
+      color: #aab2c1;
+      text-decoration: none;
+      font-size: 0.95rem;
+    }
+
+    .message {
+      margin-top: 16px;
+      min-height: 22px;
+      font-size: 0.95rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Registrierung</h1>
+    <p>
+      Erstelle einen externen Account, um auf weitere Rätsel zuzugreifen.
+      Bitte gib zusätzlich deinen Instagram-Namen oder SSO-Namen an, damit dein Account zugeordnet werden kann.
+    </p>
+
+    <form id="registerForm">
+      <div>
+        <label for="username">Username</label>
+        <input type="text" id="username" placeholder="z. B. night.signal" required />
+      </div>
+
+      <div>
+        <label for="password">Passwort</label>
+        <input type="password" id="password" placeholder="Passwort erstellen" required />
+      </div>
+
+      <div>
+        <label for="nameTag">Instagram oder SSO-Name</label>
+        <input type="text" id="nameTag" placeholder="z. B. @deinname oder SSO Name" required />
+      </div>
+
+      <button type="submit">Account erstellen</button>
+    </form>
+
+    <div class="message" id="message"></div>
+
+    <a class="back-link" href="index.html">← Zurück zur Startseite</a>
+  </div>
+
+  <script>
+    document.getElementById("registerForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const nameTag = document.getElementById("nameTag").value.trim();
+      const message = document.getElementById("message");
+
+      if (!username || !password || !nameTag) {
+        message.textContent = "Bitte fülle alle Felder aus.";
+        message.style.color = "#f0d4d4";
+        return;
+      }
+
+      // Platzhalter – hier kommt später Firebase / Firestore Logik rein
+      message.textContent = "Account wurde erstellt. Später kannst du hier direkt zur Rätsel-Seite weiterleiten.";
+      message.style.color = "#cfe7c8";
+    });
+  </script>
+</body>
+</html>
