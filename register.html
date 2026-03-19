@@ -1,434 +1,185 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Silent Force — Entry Record</title>
-  <style>
-    :root {
-      --bg: #05070b;
-      --bg-2: #0a0d13;
-      --panel: rgba(11, 15, 22, 0.78);
-      --line: rgba(164, 184, 255, 0.14);
-      --soft: rgba(210, 221, 255, 0.72);
-      --text: #edf2ff;
-      --muted: #8b97b5;
-      --accent: #d7e4ff;
-      --danger: #ff9c9c;
-      --success: #b8f0c8;
-    }
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Silent Force</title>
 
+  <style>
     * {
       box-sizing: border-box;
-    }
-
-    html, body {
       margin: 0;
-      min-height: 100%;
-      background:
-        radial-gradient(circle at 15% 20%, rgba(73, 108, 178, 0.08), transparent 0 28%),
-        radial-gradient(circle at 85% 10%, rgba(120, 129, 255, 0.05), transparent 0 22%),
-        linear-gradient(180deg, var(--bg) 0%, #04060a 100%);
-      color: var(--text);
-      font-family: Inter, Arial, Helvetica, sans-serif;
+      padding: 0;
+      font-family: "Inter", sans-serif;
     }
 
     body {
-      padding: 28px;
-      position: relative;
-      overflow-x: hidden;
-    }
-
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
+      min-height: 100vh;
       background:
-        repeating-linear-gradient(
-          to bottom,
-          rgba(255,255,255,0.018) 0px,
-          rgba(255,255,255,0.018) 1px,
-          transparent 2px,
-          transparent 4px
-        );
-      opacity: 0.18;
-      mix-blend-mode: screen;
-    }
-
-    .frame {
-      max-width: 980px;
-      margin: 0 auto;
-      min-height: calc(100vh - 56px);
-      display: grid;
+        radial-gradient(circle at 20% 20%, rgba(120,130,255,0.08), transparent 30%),
+        radial-gradient(circle at 80% 0%, rgba(180,200,255,0.05), transparent 25%),
+        #05060a;
+      color: #f2f4ff;
+      display: flex;
       align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
     }
 
-    .record {
-      position: relative;
-      border: 1px solid var(--line);
-      background:
-        linear-gradient(180deg, rgba(11,15,22,0.82), rgba(7,10,16,0.9));
-      box-shadow:
-        0 0 0 1px rgba(255,255,255,0.02) inset,
-        0 30px 80px rgba(0,0,0,0.45);
-      overflow: hidden;
+    .wrapper {
+      width: 100%;
+      max-width: 600px;
     }
 
-    .record::before {
-      content: "";
-      position: absolute;
-      inset: 14px;
-      border: 1px solid rgba(180, 196, 255, 0.07);
-      pointer-events: none;
-    }
-
-    .record-grid {
-      display: grid;
-      grid-template-columns: 0.95fr 1.2fr;
-    }
-
-    .left {
-      padding: 54px 42px 42px 42px;
-      border-right: 1px solid rgba(180, 196, 255, 0.08);
-      position: relative;
-    }
-
-    .right {
-      padding: 54px 42px 42px 42px;
-      position: relative;
-    }
-
-    .micro {
-      font-size: 11px;
-      letter-spacing: 0.28em;
+    .top {
+      font-size: 0.75rem;
+      letter-spacing: 2px;
       text-transform: uppercase;
-      color: #98a7cd;
-      margin-bottom: 22px;
-    }
-
-    .stamp {
-      display: inline-block;
-      border: 1px solid rgba(215, 228, 255, 0.18);
-      padding: 8px 12px;
-      font-size: 11px;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: #dce6ff;
-      margin-bottom: 30px;
-      background: rgba(255,255,255,0.02);
+      color: #7e879a;
+      margin-bottom: 25px;
     }
 
     h1 {
-      margin: 0 0 14px;
-      font-size: clamp(2rem, 4vw, 3.2rem);
-      line-height: 0.95;
-      letter-spacing: -0.03em;
-      font-weight: 700;
-      max-width: 280px;
+      font-size: 2.6rem;
+      font-weight: 500;
+      margin-bottom: 10px;
+      letter-spacing: -1px;
     }
 
-    .desc {
-      margin: 0 0 30px;
-      color: var(--soft);
-      line-height: 1.75;
-      max-width: 320px;
-      font-size: 15px;
+    .subtitle {
+      color: #9aa3b7;
+      line-height: 1.6;
+      margin-bottom: 40px;
+      max-width: 420px;
     }
 
-    .fragment {
-      margin-top: 34px;
-      padding-top: 22px;
-      border-top: 1px dashed rgba(180, 196, 255, 0.12);
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.8;
-      max-width: 320px;
-      white-space: pre-line;
-    }
-
-    .form-shell {
-      max-width: 470px;
-      margin-left: auto;
-    }
-
-    .form-head {
+    .form {
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 22px;
-    }
-
-    .form-title {
-      font-size: 14px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: #dce6ff;
-    }
-
-    .form-state {
-      font-size: 11px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: #a7b4d4;
-      border: 1px solid rgba(180, 196, 255, 0.12);
-      padding: 7px 10px;
-    }
-
-    form {
-      display: grid;
-      gap: 16px;
+      flex-direction: column;
+      gap: 18px;
+      margin-bottom: 35px;
     }
 
     .field {
       position: relative;
     }
 
-    .field label {
-      display: block;
-      margin-bottom: 8px;
-      font-size: 12px;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: #8d9bbc;
-    }
-
-    .field input {
+    input {
       width: 100%;
-      border: 1px solid rgba(173, 191, 255, 0.12);
-      background: rgba(0, 0, 0, 0.18);
-      color: var(--text);
-      padding: 16px 16px 15px;
-      font-size: 15px;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid rgba(255,255,255,0.15);
+      padding: 12px 4px;
+      color: white;
+      font-size: 1rem;
       outline: none;
-      transition: border-color 0.18s ease, background 0.18s ease, transform 0.18s ease;
+      transition: border 0.2s;
     }
 
-    .field input:focus {
-      border-color: rgba(215, 228, 255, 0.28);
-      background: rgba(255,255,255,0.025);
-      transform: translateY(-1px);
+    input::placeholder {
+      color: #6f778a;
     }
 
-    .field input::placeholder {
-      color: #5f6b86;
+    input:focus {
+      border-bottom: 1px solid rgba(255,255,255,0.6);
     }
 
-    .submit {
-      margin-top: 6px;
-      border: 1px solid rgba(215, 228, 255, 0.16);
-      background: linear-gradient(180deg, rgba(255,255,255,0.045), rgba(255,255,255,0.02));
-      color: #f3f7ff;
-      padding: 15px 18px;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      font-size: 12px;
+    .button {
+      margin-top: 10px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.15);
+      padding: 14px;
+      text-align: center;
       cursor: pointer;
-      transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+      transition: 0.2s;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      font-size: 0.8rem;
     }
 
-    .submit:hover {
+    .button:hover {
+      background: rgba(255,255,255,0.1);
       transform: translateY(-1px);
-      border-color: rgba(215, 228, 255, 0.3);
-      background: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.025));
     }
 
     .message {
-      min-height: 24px;
-      margin-top: 14px;
-      font-size: 14px;
-      line-height: 1.6;
-      color: var(--muted);
+      margin-top: 10px;
+      font-size: 0.9rem;
+      color: #8f98aa;
+      min-height: 20px;
     }
 
-    .footer-row {
-      margin-top: 28px;
+    .bottom {
       display: flex;
       justify-content: space-between;
-      align-items: center;
-      gap: 16px;
-      flex-wrap: wrap;
+      font-size: 0.8rem;
+      color: #6f778a;
     }
 
-    .back {
-      color: #9aa8c9;
+    .bottom a {
+      color: #8a93a8;
       text-decoration: none;
-      font-size: 13px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
     }
 
-    .back:hover {
-      color: #dce6ff;
+    .bottom a:hover {
+      color: #cfd6e6;
     }
 
-    .code-note {
-      color: #73819f;
-      font-size: 12px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-    }
-
-    .corner {
-      position: absolute;
-      width: 22px;
-      height: 22px;
-      border-color: rgba(215,228,255,0.16);
-      border-style: solid;
-      pointer-events: none;
-    }
-
-    .corner.tl { top: 12px; left: 12px; border-width: 1px 0 0 1px; }
-    .corner.tr { top: 12px; right: 12px; border-width: 1px 1px 0 0; }
-    .corner.bl { bottom: 12px; left: 12px; border-width: 0 0 1px 1px; }
-    .corner.br { bottom: 12px; right: 12px; border-width: 0 1px 1px 0; }
-
-    @media (max-width: 860px) {
-      .record-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .left {
-        border-right: none;
-        border-bottom: 1px solid rgba(180, 196, 255, 0.08);
-      }
-
-      .form-shell {
-        max-width: 100%;
-        margin-left: 0;
-      }
-
-      h1 {
-        max-width: none;
-      }
-
-      .desc,
-      .fragment {
-        max-width: none;
-      }
-    }
-
-    @media (max-width: 560px) {
-      body {
-        padding: 16px;
-      }
-
-      .left, .right {
-        padding: 34px 22px 24px;
-      }
-
-      .footer-row {
-        align-items: flex-start;
-        flex-direction: column;
-      }
-    }
   </style>
 </head>
+
 <body>
-  <div class="frame">
-    <section class="record">
-      <span class="corner tl"></span>
-      <span class="corner tr"></span>
-      <span class="corner bl"></span>
-      <span class="corner br"></span>
+  <div class="wrapper">
 
-      <div class="record-grid">
-        <div class="left">
-          <div class="micro">silent force / entry archive</div>
-          <div class="stamp">layer two</div>
+    <div class="top">silent force</div>
 
-          <h1>Entry record.</h1>
-          <p class="desc">
-            Das erste Signal war öffentlich. Alles dahinter ist es nicht.
-            Hinterlasse eine Spur, wenn du weitersehen willst.
-          </p>
+    <h1>you made it past the first layer</h1>
+    <p class="subtitle">
+      most people stop at what they see.  
+      some keep going.
+    </p>
 
-          <div class="fragment">frag. 02
+    <form class="form" id="form">
 
-einige finden den eingang
-nur wenige bleiben
-
-kein name ist echt
-aber jeder hinterlässt einen</div>
-        </div>
-
-        <div class="right">
-          <div class="form-shell">
-            <div class="form-head">
-              <div class="form-title">new record</div>
-              <div class="form-state">open</div>
-            </div>
-
-            <form id="registerForm" novalidate>
-              <div class="field">
-                <label for="username">Identifier</label>
-                <input
-                  id="username"
-                  name="username"
-                  type="text"
-                  placeholder="choose a name"
-                  autocomplete="off"
-                />
-              </div>
-
-              <div class="field">
-                <label for="password">Key</label>
-                <input
-                  id="password"
-                  name="password"
-                  type="password"
-                  placeholder="set your key"
-                  autocomplete="new-password"
-                />
-              </div>
-
-              <div class="field">
-                <label for="tag">Trace</label>
-                <input
-                  id="tag"
-                  name="tag"
-                  type="text"
-                  placeholder="@instagram or SSO name"
-                  autocomplete="off"
-                />
-              </div>
-
-              <button class="submit" type="submit">seal record</button>
-            </form>
-
-            <div class="message" id="message"></div>
-
-            <div class="footer-row">
-              <a class="back" href="index.html">← return to entry</a>
-              <div class="code-note">record type: external</div>
-            </div>
-          </div>
-        </div>
+      <div class="field">
+        <input type="text" id="username" placeholder="choose a name" />
       </div>
-    </section>
+
+      <div class="field">
+        <input type="password" id="password" placeholder="set a key" />
+      </div>
+
+      <div class="field">
+        <input type="text" id="tag" placeholder="@handle or sso name" />
+      </div>
+
+      <div class="button" onclick="submitForm()">continue</div>
+
+    </form>
+
+    <div class="message" id="message"></div>
+
+    <div class="bottom">
+      <a href="index.html">← back</a>
+      <a href="login.html">already inside?</a>
+    </div>
+
   </div>
 
   <script>
-    const form = document.getElementById("registerForm");
-    const message = document.getElementById("message");
+    function submitForm() {
+      const u = document.getElementById("username").value.trim();
+      const p = document.getElementById("password").value.trim();
+      const t = document.getElementById("tag").value.trim();
+      const m = document.getElementById("message");
 
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
-
-      const username = document.getElementById("username").value.trim();
-      const password = document.getElementById("password").value.trim();
-      const tag = document.getElementById("tag").value.trim();
-
-      if (!username || !password || !tag) {
-        message.textContent = "record incomplete.";
-        message.style.color = "var(--danger)";
+      if (!u || !p || !t) {
+        m.textContent = "not enough yet.";
         return;
       }
 
-      message.textContent = "record sealed. awaiting verification.";
-      message.style.color = "var(--success)";
-    });
+      m.textContent = "saved. you can continue now.";
+    }
   </script>
 </body>
 </html>
