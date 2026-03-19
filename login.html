@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Silent Force – Login</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top, rgba(60, 60, 80, 0.25), transparent 35%),
+        linear-gradient(180deg, #050507 0%, #0b0d12 100%);
+      color: #f2f2f2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 30px;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 560px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 18px;
+      padding: 36px 28px;
+      backdrop-filter: blur(8px);
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    p {
+      color: #b8beca;
+      line-height: 1.6;
+      margin-bottom: 26px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    label {
+      font-size: 0.92rem;
+      color: #cfd5e0;
+    }
+
+    input {
+      width: 100%;
+      padding: 14px 16px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.05);
+      color: white;
+      outline: none;
+    }
+
+    input::placeholder {
+      color: #8991a2;
+    }
+
+    button {
+      margin-top: 8px;
+      padding: 14px 18px;
+      border: none;
+      border-radius: 12px;
+      background: #f2f2f2;
+      color: #111318;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .message {
+      margin-top: 16px;
+      min-height: 22px;
+      font-size: 0.95rem;
+    }
+
+    .links {
+      margin-top: 18px;
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .links a {
+      color: #aab2c1;
+      text-decoration: none;
+      font-size: 0.95rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Login</h1>
+    <p>
+      Logge dich mit deinem Account ein. Externe Nutzer werden später zum Rätselbereich,
+      Mitglieder zum internen Clubbereich weitergeleitet.
+    </p>
+
+    <form id="loginForm">
+      <div>
+        <label for="username">Username</label>
+        <input type="text" id="username" placeholder="Dein Username" required />
+      </div>
+
+      <div>
+        <label for="password">Passwort</label>
+        <input type="password" id="password" placeholder="Dein Passwort" required />
+      </div>
+
+      <button type="submit">Einloggen</button>
+    </form>
+
+    <div class="message" id="message"></div>
+
+    <div class="links">
+      <a href="register.html">Noch keinen Account?</a>
+      <a href="index.html">Zurück zur Startseite</a>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("loginForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const message = document.getElementById("message");
+
+      if (!username || !password) {
+        message.textContent = "Bitte fülle alle Felder aus.";
+        message.style.color = "#f0d4d4";
+        return;
+      }
+
+      // Platzhalter-Logik
+      // Später: User aus Firestore laden und role prüfen
+      if (username === "member" && password === "1234") {
+        message.textContent = "Mitglied erkannt. Später Weiterleitung zum Dashboard.";
+        message.style.color = "#cfe7c8";
+      } else {
+        message.textContent = "Externer Account erkannt. Später Weiterleitung zum Rätselbereich.";
+        message.style.color = "#cfe7c8";
+      }
+    });
+  </script>
+</body>
+</html>
