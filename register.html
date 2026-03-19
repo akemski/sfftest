@@ -3,151 +3,431 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Silent Force – Registrierung</title>
+  <title>Silent Force — Entry Record</title>
   <style>
+    :root {
+      --bg: #05070b;
+      --bg-2: #0a0d13;
+      --panel: rgba(11, 15, 22, 0.78);
+      --line: rgba(164, 184, 255, 0.14);
+      --soft: rgba(210, 221, 255, 0.72);
+      --text: #edf2ff;
+      --muted: #8b97b5;
+      --accent: #d7e4ff;
+      --danger: #ff9c9c;
+      --success: #b8f0c8;
+    }
+
     * {
       box-sizing: border-box;
+    }
+
+    html, body {
       margin: 0;
-      padding: 0;
-      font-family: Arial, Helvetica, sans-serif;
+      min-height: 100%;
+      background:
+        radial-gradient(circle at 15% 20%, rgba(73, 108, 178, 0.08), transparent 0 28%),
+        radial-gradient(circle at 85% 10%, rgba(120, 129, 255, 0.05), transparent 0 22%),
+        linear-gradient(180deg, var(--bg) 0%, #04060a 100%);
+      color: var(--text);
+      font-family: Inter, Arial, Helvetica, sans-serif;
     }
 
     body {
-      min-height: 100vh;
-      background:
-        radial-gradient(circle at top, rgba(60, 60, 80, 0.25), transparent 35%),
-        linear-gradient(180deg, #050507 0%, #0b0d12 100%);
-      color: #f2f2f2;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 30px;
+      padding: 28px;
+      position: relative;
+      overflow-x: hidden;
     }
 
-    .card {
-      width: 100%;
-      max-width: 580px;
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 18px;
-      padding: 36px 28px;
-      backdrop-filter: blur(8px);
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        repeating-linear-gradient(
+          to bottom,
+          rgba(255,255,255,0.018) 0px,
+          rgba(255,255,255,0.018) 1px,
+          transparent 2px,
+          transparent 4px
+        );
+      opacity: 0.18;
+      mix-blend-mode: screen;
+    }
+
+    .frame {
+      max-width: 980px;
+      margin: 0 auto;
+      min-height: calc(100vh - 56px);
+      display: grid;
+      align-items: center;
+    }
+
+    .record {
+      position: relative;
+      border: 1px solid var(--line);
+      background:
+        linear-gradient(180deg, rgba(11,15,22,0.82), rgba(7,10,16,0.9));
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,0.02) inset,
+        0 30px 80px rgba(0,0,0,0.45);
+      overflow: hidden;
+    }
+
+    .record::before {
+      content: "";
+      position: absolute;
+      inset: 14px;
+      border: 1px solid rgba(180, 196, 255, 0.07);
+      pointer-events: none;
+    }
+
+    .record-grid {
+      display: grid;
+      grid-template-columns: 0.95fr 1.2fr;
+    }
+
+    .left {
+      padding: 54px 42px 42px 42px;
+      border-right: 1px solid rgba(180, 196, 255, 0.08);
+      position: relative;
+    }
+
+    .right {
+      padding: 54px 42px 42px 42px;
+      position: relative;
+    }
+
+    .micro {
+      font-size: 11px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: #98a7cd;
+      margin-bottom: 22px;
+    }
+
+    .stamp {
+      display: inline-block;
+      border: 1px solid rgba(215, 228, 255, 0.18);
+      padding: 8px 12px;
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #dce6ff;
+      margin-bottom: 30px;
+      background: rgba(255,255,255,0.02);
     }
 
     h1 {
-      font-size: 2rem;
-      margin-bottom: 10px;
-      text-transform: uppercase;
-      letter-spacing: 2px;
+      margin: 0 0 14px;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+      font-weight: 700;
+      max-width: 280px;
     }
 
-    p {
-      color: #b8beca;
-      line-height: 1.6;
-      margin-bottom: 26px;
+    .desc {
+      margin: 0 0 30px;
+      color: var(--soft);
+      line-height: 1.75;
+      max-width: 320px;
+      font-size: 15px;
+    }
+
+    .fragment {
+      margin-top: 34px;
+      padding-top: 22px;
+      border-top: 1px dashed rgba(180, 196, 255, 0.12);
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.8;
+      max-width: 320px;
+      white-space: pre-line;
+    }
+
+    .form-shell {
+      max-width: 470px;
+      margin-left: auto;
+    }
+
+    .form-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+
+    .form-title {
+      font-size: 14px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #dce6ff;
+    }
+
+    .form-state {
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #a7b4d4;
+      border: 1px solid rgba(180, 196, 255, 0.12);
+      padding: 7px 10px;
     }
 
     form {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
+      display: grid;
+      gap: 16px;
     }
 
-    label {
-      font-size: 0.92rem;
-      color: #cfd5e0;
+    .field {
+      position: relative;
     }
 
-    input {
+    .field label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #8d9bbc;
+    }
+
+    .field input {
       width: 100%;
-      padding: 14px 16px;
-      border-radius: 12px;
-      border: 1px solid rgba(255,255,255,0.1);
-      background: rgba(255,255,255,0.05);
-      color: white;
+      border: 1px solid rgba(173, 191, 255, 0.12);
+      background: rgba(0, 0, 0, 0.18);
+      color: var(--text);
+      padding: 16px 16px 15px;
+      font-size: 15px;
       outline: none;
+      transition: border-color 0.18s ease, background 0.18s ease, transform 0.18s ease;
     }
 
-    input::placeholder {
-      color: #8991a2;
+    .field input:focus {
+      border-color: rgba(215, 228, 255, 0.28);
+      background: rgba(255,255,255,0.025);
+      transform: translateY(-1px);
     }
 
-    button {
-      margin-top: 8px;
-      padding: 14px 18px;
-      border: none;
-      border-radius: 12px;
-      background: #f2f2f2;
-      color: #111318;
-      font-weight: bold;
+    .field input::placeholder {
+      color: #5f6b86;
+    }
+
+    .submit {
+      margin-top: 6px;
+      border: 1px solid rgba(215, 228, 255, 0.16);
+      background: linear-gradient(180deg, rgba(255,255,255,0.045), rgba(255,255,255,0.02));
+      color: #f3f7ff;
+      padding: 15px 18px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-size: 12px;
       cursor: pointer;
+      transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
     }
 
-    .back-link {
-      display: inline-block;
-      margin-top: 18px;
-      color: #aab2c1;
-      text-decoration: none;
-      font-size: 0.95rem;
+    .submit:hover {
+      transform: translateY(-1px);
+      border-color: rgba(215, 228, 255, 0.3);
+      background: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.025));
     }
 
     .message {
-      margin-top: 16px;
-      min-height: 22px;
-      font-size: 0.95rem;
+      min-height: 24px;
+      margin-top: 14px;
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--muted);
+    }
+
+    .footer-row {
+      margin-top: 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .back {
+      color: #9aa8c9;
+      text-decoration: none;
+      font-size: 13px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .back:hover {
+      color: #dce6ff;
+    }
+
+    .code-note {
+      color: #73819f;
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .corner {
+      position: absolute;
+      width: 22px;
+      height: 22px;
+      border-color: rgba(215,228,255,0.16);
+      border-style: solid;
+      pointer-events: none;
+    }
+
+    .corner.tl { top: 12px; left: 12px; border-width: 1px 0 0 1px; }
+    .corner.tr { top: 12px; right: 12px; border-width: 1px 1px 0 0; }
+    .corner.bl { bottom: 12px; left: 12px; border-width: 0 0 1px 1px; }
+    .corner.br { bottom: 12px; right: 12px; border-width: 0 1px 1px 0; }
+
+    @media (max-width: 860px) {
+      .record-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .left {
+        border-right: none;
+        border-bottom: 1px solid rgba(180, 196, 255, 0.08);
+      }
+
+      .form-shell {
+        max-width: 100%;
+        margin-left: 0;
+      }
+
+      h1 {
+        max-width: none;
+      }
+
+      .desc,
+      .fragment {
+        max-width: none;
+      }
+    }
+
+    @media (max-width: 560px) {
+      body {
+        padding: 16px;
+      }
+
+      .left, .right {
+        padding: 34px 22px 24px;
+      }
+
+      .footer-row {
+        align-items: flex-start;
+        flex-direction: column;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="card">
-    <h1>Registrierung</h1>
-    <p>
-      Erstelle einen externen Account, um auf weitere Rätsel zuzugreifen.
-      Bitte gib zusätzlich deinen Instagram-Namen oder SSO-Namen an, damit dein Account zugeordnet werden kann.
-    </p>
+  <div class="frame">
+    <section class="record">
+      <span class="corner tl"></span>
+      <span class="corner tr"></span>
+      <span class="corner bl"></span>
+      <span class="corner br"></span>
 
-    <form id="registerForm">
-      <div>
-        <label for="username">Username</label>
-        <input type="text" id="username" placeholder="z. B. night.signal" required />
+      <div class="record-grid">
+        <div class="left">
+          <div class="micro">silent force / entry archive</div>
+          <div class="stamp">layer two</div>
+
+          <h1>Entry record.</h1>
+          <p class="desc">
+            Das erste Signal war öffentlich. Alles dahinter ist es nicht.
+            Hinterlasse eine Spur, wenn du weitersehen willst.
+          </p>
+
+          <div class="fragment">frag. 02
+
+einige finden den eingang
+nur wenige bleiben
+
+kein name ist echt
+aber jeder hinterlässt einen</div>
+        </div>
+
+        <div class="right">
+          <div class="form-shell">
+            <div class="form-head">
+              <div class="form-title">new record</div>
+              <div class="form-state">open</div>
+            </div>
+
+            <form id="registerForm" novalidate>
+              <div class="field">
+                <label for="username">Identifier</label>
+                <input
+                  id="username"
+                  name="username"
+                  type="text"
+                  placeholder="choose a name"
+                  autocomplete="off"
+                />
+              </div>
+
+              <div class="field">
+                <label for="password">Key</label>
+                <input
+                  id="password"
+                  name="password"
+                  type="password"
+                  placeholder="set your key"
+                  autocomplete="new-password"
+                />
+              </div>
+
+              <div class="field">
+                <label for="tag">Trace</label>
+                <input
+                  id="tag"
+                  name="tag"
+                  type="text"
+                  placeholder="@instagram or SSO name"
+                  autocomplete="off"
+                />
+              </div>
+
+              <button class="submit" type="submit">seal record</button>
+            </form>
+
+            <div class="message" id="message"></div>
+
+            <div class="footer-row">
+              <a class="back" href="index.html">← return to entry</a>
+              <div class="code-note">record type: external</div>
+            </div>
+          </div>
+        </div>
       </div>
-
-      <div>
-        <label for="password">Passwort</label>
-        <input type="password" id="password" placeholder="Passwort erstellen" required />
-      </div>
-
-      <div>
-        <label for="nameTag">Instagram oder SSO-Name</label>
-        <input type="text" id="nameTag" placeholder="z. B. @deinname oder SSO Name" required />
-      </div>
-
-      <button type="submit">Account erstellen</button>
-    </form>
-
-    <div class="message" id="message"></div>
-
-    <a class="back-link" href="index.html">← Zurück zur Startseite</a>
+    </section>
   </div>
 
   <script>
-    document.getElementById("registerForm").addEventListener("submit", function(e) {
+    const form = document.getElementById("registerForm");
+    const message = document.getElementById("message");
+
+    form.addEventListener("submit", function (e) {
       e.preventDefault();
 
       const username = document.getElementById("username").value.trim();
       const password = document.getElementById("password").value.trim();
-      const nameTag = document.getElementById("nameTag").value.trim();
-      const message = document.getElementById("message");
+      const tag = document.getElementById("tag").value.trim();
 
-      if (!username || !password || !nameTag) {
-        message.textContent = "Bitte fülle alle Felder aus.";
-        message.style.color = "#f0d4d4";
+      if (!username || !password || !tag) {
+        message.textContent = "record incomplete.";
+        message.style.color = "var(--danger)";
         return;
       }
 
-      // Platzhalter – hier kommt später Firebase / Firestore Logik rein
-      message.textContent = "Account wurde erstellt. Später kannst du hier direkt zur Rätsel-Seite weiterleiten.";
-      message.style.color = "#cfe7c8";
+      message.textContent = "record sealed. awaiting verification.";
+      message.style.color = "var(--success)";
     });
   </script>
 </body>
