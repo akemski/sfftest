@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Silent Force</title>
 
   <style>
@@ -10,176 +10,310 @@
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: "Inter", sans-serif;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: Inter, Arial, sans-serif;
+      background: #04050a;
+      color: #f5f7ff;
+      overflow-x: hidden;
     }
 
     body {
+      position: relative;
       min-height: 100vh;
       background:
-        radial-gradient(circle at 20% 20%, rgba(120,130,255,0.08), transparent 30%),
-        radial-gradient(circle at 80% 0%, rgba(180,200,255,0.05), transparent 25%),
-        #05060a;
-      color: #f2f4ff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 40px 20px;
+        radial-gradient(circle at 20% 20%, rgba(110, 125, 255, 0.10), transparent 0 20%),
+        radial-gradient(circle at 80% 10%, rgba(190, 210, 255, 0.05), transparent 0 18%),
+        radial-gradient(circle at 50% 80%, rgba(130, 90, 255, 0.07), transparent 0 22%),
+        linear-gradient(180deg, #04050a 0%, #060812 45%, #04050a 100%);
     }
 
-    .wrapper {
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        linear-gradient(rgba(255,255,255,0.015), rgba(255,255,255,0.015)),
+        repeating-linear-gradient(
+          to bottom,
+          transparent 0px,
+          transparent 3px,
+          rgba(255,255,255,0.015) 4px
+        );
+      opacity: 0.35;
+      mix-blend-mode: screen;
+    }
+
+    .fog {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      filter: blur(70px);
+      opacity: 0.45;
+    }
+
+    .fog::before,
+    .fog::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(157, 177, 255, 0.10);
+    }
+
+    .fog::before {
+      width: 300px;
+      height: 300px;
+      left: 10%;
+      top: 15%;
+    }
+
+    .fog::after {
+      width: 420px;
+      height: 420px;
+      right: 8%;
+      bottom: 8%;
+      background: rgba(186, 201, 255, 0.06);
+    }
+
+    .page {
+      position: relative;
+      z-index: 1;
       width: 100%;
-      max-width: 600px;
-    }
-
-    .top {
-      font-size: 0.75rem;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: #7e879a;
-      margin-bottom: 25px;
-    }
-
-    h1 {
-      font-size: 2.6rem;
-      font-weight: 500;
-      margin-bottom: 10px;
-      letter-spacing: -1px;
-    }
-
-    .subtitle {
-      color: #9aa3b7;
-      line-height: 1.6;
-      margin-bottom: 40px;
-      max-width: 420px;
-    }
-
-    .form {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 60px 24px 40px;
       display: flex;
       flex-direction: column;
-      gap: 18px;
-      margin-bottom: 35px;
+      min-height: 100vh;
+      justify-content: space-between;
     }
 
-    .field {
-      position: relative;
+    .topline {
+      font-size: 0.72rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: #9ba7c7;
+      opacity: 0.8;
+    }
+
+    .hero {
+      margin-top: 60px;
+      max-width: 760px;
+    }
+
+    .hero h1 {
+      font-size: clamp(3rem, 8vw, 6.5rem);
+      line-height: 0.95;
+      letter-spacing: -0.05em;
+      font-weight: 600;
+      margin-bottom: 18px;
+      text-wrap: balance;
+    }
+
+    .hero p {
+      max-width: 520px;
+      color: #b8c0d7;
+      font-size: 1.05rem;
+      line-height: 1.8;
+    }
+
+    .line {
+      width: 120px;
+      height: 1px;
+      background: rgba(255,255,255,0.15);
+      margin: 28px 0;
+    }
+
+    .whisper {
+      margin-top: 14px;
+      color: #8d96ae;
+      font-size: 0.9rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .panel {
+      align-self: flex-end;
+      width: 100%;
+      max-width: 500px;
+      margin-top: 70px;
+      background: rgba(10, 12, 20, 0.38);
+      border: 1px solid rgba(255,255,255,0.08);
+      backdrop-filter: blur(10px);
+      padding: 26px 24px 22px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.28);
+    }
+
+    .panel-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .panel-title {
+      font-size: 0.78rem;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: #cfd8f4;
+    }
+
+    .panel-note {
+      font-size: 0.72rem;
+      color: #8f9ab8;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
     }
 
     input {
       width: 100%;
-      background: transparent;
-      border: none;
-      border-bottom: 1px solid rgba(255,255,255,0.15);
-      padding: 12px 4px;
-      color: white;
-      font-size: 1rem;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: #f5f7ff;
+      padding: 15px 16px;
       outline: none;
-      transition: border 0.2s;
+      font-size: 0.98rem;
+      transition: 0.2s ease;
     }
 
     input::placeholder {
-      color: #6f778a;
+      color: #7c86a0;
     }
 
     input:focus {
-      border-bottom: 1px solid rgba(255,255,255,0.6);
-    }
-
-    .button {
-      margin-top: 10px;
+      border-color: rgba(202, 213, 255, 0.25);
       background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.15);
-      padding: 14px;
-      text-align: center;
-      cursor: pointer;
-      transition: 0.2s;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      font-size: 0.8rem;
     }
 
-    .button:hover {
-      background: rgba(255,255,255,0.1);
-      transform: translateY(-1px);
+    button {
+      margin-top: 4px;
+      background: transparent;
+      color: #f5f7ff;
+      border: 1px solid rgba(255,255,255,0.14);
+      padding: 15px 18px;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      font-size: 0.72rem;
+      transition: 0.2s ease;
+    }
+
+    button:hover {
+      background: rgba(255,255,255,0.05);
+      border-color: rgba(255,255,255,0.24);
     }
 
     .message {
-      margin-top: 10px;
-      font-size: 0.9rem;
-      color: #8f98aa;
-      min-height: 20px;
+      min-height: 22px;
+      margin-top: 14px;
+      color: #9aa4bd;
+      font-size: 0.92rem;
     }
 
     .bottom {
+      margin-top: 26px;
       display: flex;
       justify-content: space-between;
-      font-size: 0.8rem;
-      color: #6f778a;
+      gap: 16px;
+      flex-wrap: wrap;
+      font-size: 0.84rem;
+      color: #8993aa;
     }
 
     .bottom a {
-      color: #8a93a8;
+      color: #9aa4bd;
       text-decoration: none;
     }
 
     .bottom a:hover {
-      color: #cfd6e6;
+      color: #dbe3ff;
     }
 
+    @media (max-width: 760px) {
+      .page {
+        justify-content: flex-start;
+      }
+
+      .hero {
+        margin-top: 44px;
+      }
+
+      .panel {
+        align-self: stretch;
+        margin-top: 42px;
+      }
+    }
   </style>
 </head>
-
 <body>
-  <div class="wrapper">
+  <div class="fog"></div>
 
-    <div class="top">silent force</div>
+  <main class="page">
+    <div>
+      <div class="topline">Silent Force</div>
 
-    <h1>you made it past the first layer</h1>
-    <p class="subtitle">
-      most people stop at what they see.  
-      some keep going.
-    </p>
+      <section class="hero">
+        <h1>Some doors only appear when you keep looking.</h1>
+        <div class="line"></div>
+        <p>
+          The first layer was easy to find.  
+          This one wasn’t meant for everyone.
+        </p>
+        <div class="whisper">leave a trace to continue</div>
+      </section>
 
-    <form class="form" id="form">
+      <section class="panel">
+        <div class="panel-head">
+          <div class="panel-title">Second Layer</div>
+          <div class="panel-note">external access</div>
+        </div>
 
-      <div class="field">
-        <input type="text" id="username" placeholder="choose a name" />
-      </div>
+        <form id="registerForm" novalidate>
+          <input type="text" id="username" placeholder="choose a name" autocomplete="off" />
+          <input type="password" id="password" placeholder="set a key" autocomplete="new-password" />
+          <input type="text" id="tag" placeholder="@handle or sso name" autocomplete="off" />
 
-      <div class="field">
-        <input type="password" id="password" placeholder="set a key" />
-      </div>
+          <button type="submit">Continue</button>
+        </form>
 
-      <div class="field">
-        <input type="text" id="tag" placeholder="@handle or sso name" />
-      </div>
+        <div class="message" id="message"></div>
 
-      <div class="button" onclick="submitForm()">continue</div>
-
-    </form>
-
-    <div class="message" id="message"></div>
-
-    <div class="bottom">
-      <a href="index.html">← back</a>
-      <a href="login.html">already inside?</a>
+        <div class="bottom">
+          <a href="index.html">← back</a>
+          <a href="login.html">already inside?</a>
+        </div>
+      </section>
     </div>
-
-  </div>
+  </main>
 
   <script>
-    function submitForm() {
-      const u = document.getElementById("username").value.trim();
-      const p = document.getElementById("password").value.trim();
-      const t = document.getElementById("tag").value.trim();
-      const m = document.getElementById("message");
+    const form = document.getElementById("registerForm");
+    const message = document.getElementById("message");
 
-      if (!u || !p || !t) {
-        m.textContent = "not enough yet.";
+    form.addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const tag = document.getElementById("tag").value.trim();
+
+      if (!username || !password || !tag) {
+        message.textContent = "not enough yet.";
         return;
       }
 
-      m.textContent = "saved. you can continue now.";
-    }
+      message.textContent = "saved. the next layer is waiting.";
+    });
   </script>
 </body>
 </html>
