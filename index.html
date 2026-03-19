@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Silent Force</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top, rgba(60, 60, 80, 0.25), transparent 35%),
+        linear-gradient(180deg, #050507 0%, #0b0d12 100%);
+      color: #f2f2f2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 30px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 850px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 18px;
+      padding: 40px 30px;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.35);
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 35px;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: bold;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+    }
+
+    .status {
+      font-size: 0.9rem;
+      color: #a5aab8;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .hero {
+      margin-bottom: 35px;
+    }
+
+    .hero h1 {
+      font-size: 2.4rem;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      margin-bottom: 12px;
+    }
+
+    .hero p {
+      color: #b8beca;
+      line-height: 1.6;
+      max-width: 650px;
+    }
+
+    .riddle-box {
+      margin-top: 30px;
+      padding: 28px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.035);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .riddle-label {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #8d95a5;
+      margin-bottom: 14px;
+    }
+
+    .riddle-title {
+      font-size: 1.3rem;
+      margin-bottom: 14px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .riddle-text {
+      color: #d5d9e3;
+      line-height: 1.7;
+      margin-bottom: 18px;
+    }
+
+    .hint {
+      font-size: 0.95rem;
+      color: #9ca5b5;
+      margin-bottom: 20px;
+    }
+
+    .form-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    input[type="text"] {
+      flex: 1;
+      min-width: 220px;
+      padding: 14px 16px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.05);
+      color: white;
+      outline: none;
+    }
+
+    input[type="text"]::placeholder {
+      color: #8991a2;
+    }
+
+    button {
+      padding: 14px 18px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.2s ease;
+    }
+
+    .check-btn {
+      background: #f2f2f2;
+      color: #0d0f14;
+    }
+
+    .check-btn:hover {
+      transform: translateY(-1px);
+      opacity: 0.95;
+    }
+
+    .result {
+      margin-top: 16px;
+      min-height: 24px;
+      font-size: 0.98rem;
+      color: #d0d7e6;
+    }
+
+    .actions {
+      margin-top: 35px;
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .action-btn {
+      display: inline-block;
+      text-decoration: none;
+      padding: 14px 18px;
+      border-radius: 12px;
+      font-weight: bold;
+      transition: 0.2s ease;
+    }
+
+    .register-btn {
+      background: #f2f2f2;
+      color: #101217;
+    }
+
+    .login-btn {
+      background: transparent;
+      color: #f2f2f2;
+      border: 1px solid rgba(255,255,255,0.15);
+    }
+
+    .action-btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .footer-note {
+      margin-top: 20px;
+      color: #8f96a5;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 640px) {
+      .hero h1 {
+        font-size: 1.9rem;
+      }
+
+      .container {
+        padding: 28px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="topbar">
+      <div class="logo">Silent Force</div>
+      <div class="status">First Layer Public</div>
+    </div>
+
+    <section class="hero">
+      <h1>The first signal is open.</h1>
+      <p>
+        Nicht jeder Weg beginnt mit einer Einladung. Manche beginnen mit einem Hinweis.
+        Löse das erste Rätsel. Alles dahinter benötigt einen Account.
+      </p>
+    </section>
+
+    <section class="riddle-box">
+      <div class="riddle-label">Trial 01</div>
+      <div class="riddle-title">Wer sieht, versteht.</div>
+      <p class="riddle-text">
+        Ich habe keine Stimme, doch ich kann antworten.  
+        Ich habe kein Gesicht, doch du kannst mich sehen.  
+        Ich bin nur da, wenn Licht auf mich trifft.  
+        Was bin ich?
+      </p>
+      <p class="hint">Hinweis: Das gesuchte Wort ist singular und klein geschrieben.</p>
+
+      <div class="form-row">
+        <input type="text" id="answer" placeholder="Deine Antwort eingeben..." />
+        <button class="check-btn" onclick="checkRiddle()">Prüfen</button>
+      </div>
+
+      <div class="result" id="result"></div>
+    </section>
+
+    <div class="actions">
+      <a class="action-btn register-btn" href="register.html">Registrieren</a>
+      <a class="action-btn login-btn" href="login.html">Einloggen</a>
+    </div>
+
+    <p class="footer-note">
+      Externe Accounts erhalten Zugriff auf weitere Rätsel. Mitglieder sehen nach dem Login den internen Bereich.
+    </p>
+  </div>
+
+  <script>
+    function checkRiddle() {
+      const input = document.getElementById("answer").value.trim().toLowerCase();
+      const result = document.getElementById("result");
+
+      if (input === "spiegelung") {
+        result.innerHTML = "✔ Erstes Rätsel gelöst. Um fortzufahren, registriere dich oder logge dich ein.";
+        result.style.color = "#cfe7c8";
+      } else if (input === "") {
+        result.innerHTML = "Bitte gib eine Antwort ein.";
+        result.style.color = "#f0d4d4";
+      } else {
+        result.innerHTML = "✖ Nicht korrekt. Versuch es nochmal.";
+        result.style.color = "#f0d4d4";
+      }
+    }
+  </script>
+</body>
+</html>
